@@ -1,0 +1,66 @@
+body, input {
+  font-size: 22px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  background-color: #f1f1f1;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+.main {
+  width: 500px;
+  height: 600px;
+  margin: auto; }
+
+.window {
+  display: flex;
+  flex-direction: column-reverse;
+  position: relative;
+  height: 500px;
+  overflow-y: auto;
+  padding: 30px;
+  background-color: #fff; }
+  .window::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5; }
+  .window::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5; }
+  .window::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: rgba(85, 85, 85, 0.753); }
+
+.input {
+  background-color: #d1d1d1;
+  padding: 0 10px;
+  height: 50px;
+  width: 100%;
+  border: none; }
+  .input:focus {
+    outline: none; }
+
+[class^=message] {
+  padding: 4px 10px 8px;
+  margin-top: 20px;
+  position: relative;
+  top: 10px;
+  min-width: 60px;
+  max-width: 300px;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word; }
+
+.message1 {
+  align-self: flex-end;
+  background-color: #D7FED6;
+  clip-path: polygon(0% 0%, 100% 0, 100% 79%, 83% 100%, 0 100%); }
+
+.message2 {
+  align-self: flex-start;
+  background-color: #CCF6FF;
+  clip-path: polygon(0% 0%, 100% 0, 100% 79%, 83% 100%, 0 100%); }
+
+.window [class^=message]:last-child {
+  border-top: 20px solid white; }
