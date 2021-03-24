@@ -6,17 +6,18 @@ input.addEventListener("keydown", function(e) {
     if (e.key == "Enter") {
         e.preventDefault();
         if (!input.value.trim()) return;
-        socket.emit('chat message', input.value.trim());
+        socket.emit("newUser", socket.id);
+        socket.emit('chat message', input.value.trim(), socket.id);
         input.value = "";
     }
 });
-socket.on('chat message', function(msg) {
-    let message = createMessage(msg);
+socket.on('chat message', function(msg, id) {
+    let message = createMessage(msg, id);
     messageWindow.prepend(message);
 });
-function createMessage(msg) {
+function createMessage(msg, id) {
     let div = document.createElement("div");
-    div.classList.add(`message${userCode++%2 + 1}`);
+    div.classList.add(`message${id}`);
     div.textContent = msg;
     return div;
 }
