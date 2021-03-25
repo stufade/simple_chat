@@ -47,20 +47,17 @@ body, input {
   position: relative;
   top: 10px;
   min-width: 60px;
-  max-width: 300px;
+  max-width: 350px;
   -ms-word-break: break-all;
   word-break: break-all;
-  word-break: break-word; }
+  word-break: break-word;
+  clip-path: polygon(100% 0, 100% 84%, 94% 100%, 0 100%, 0 0); }
 
 .message1 {
-  align-self: flex-end;
-  background-color: #D7FED6;
-  clip-path: polygon(0% 0%, 100% 0, 100% 79%, 83% 100%, 0 100%); }
+  align-self: flex-end; }
 
 .message2 {
-  align-self: flex-start;
-  background-color: #CCF6FF;
-  clip-path: polygon(0% 0%, 100% 0, 100% 79%, 83% 100%, 0 100%); }
+  align-self: flex-start; }
 
 .window [class^=message]:last-child {
   border-top: 20px solid white; }

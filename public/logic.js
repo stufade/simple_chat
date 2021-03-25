@@ -1,7 +1,7 @@
 var socket = io();
 const input = document.querySelector(".input");
 const messageWindow = document.querySelector(".window");
-let userCode = 2;
+
 input.addEventListener("keydown", function(e) {
     if (e.key == "Enter") {
         e.preventDefault();
@@ -11,13 +11,16 @@ input.addEventListener("keydown", function(e) {
         input.value = "";
     }
 });
-socket.on('chat message', function(msg, id) {
-    let message = createMessage(msg, id);
+
+socket.on('chat message', function(msg, color, messageId) {
+    let message = createMessage(msg, color, messageId);
     messageWindow.prepend(message);
 });
-function createMessage(msg, id) {
+
+function createMessage(msg, color, messageId) {
     let div = document.createElement("div");
-    div.classList.add(`message${id}`);
+    div.classList.add(`message${messageId}`);
+    div.style.backgroundColor = color;
     div.textContent = msg;
     return div;
 }

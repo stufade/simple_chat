@@ -1,6 +1,3 @@
-$message1-color: #D7FED6;
-$message2-color: #CCF6FF;
-
 body, input {
     font-size: 22px;
     font-family: 'Roboto', sans-serif;
@@ -68,25 +65,21 @@ body, input {
     top: 10px;
 
     min-width: 60px;
-    max-width: 300px;
+    max-width: 350px;
 
     -ms-word-break: break-all;
     word-break: break-all;
     word-break: break-word;
+    
+    clip-path: polygon(100% 0, 100% 84%, 94% 100%, 0 100%, 0 0);
 }
 
 .message1 {
     align-self: flex-end;
-    background-color: $message1-color;
-
-    clip-path: polygon(0% 0%, 100% 0, 100% 79%, 83% 100%, 0 100%);
 }
 
 .message2 {
-    align-self: flex-start;
-    background-color: $message2-color;
-
-    clip-path: polygon(0% 0%, 100% 0, 100% 79%, 83% 100%, 0 100%);
+    align-self: flex-start; 
 }
 
 .window [class^=message]:last-child {
