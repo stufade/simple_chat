@@ -1,4 +1,4 @@
-var socket = io();
+let socket = io();
 const input = document.querySelector(".input");
 const messageWindow = document.querySelector(".window");
 
@@ -6,8 +6,8 @@ input.addEventListener("keydown", function(e) {
     if (e.key == "Enter") {
         e.preventDefault();
         if (!input.value.trim()) return;
-        socket.emit("newUser", socket.id);
-        socket.emit('chat message', input.value.trim(), socket.id);
+        socket.emit("newUser");
+        socket.emit('chat message', input.value.trim());
         input.value = "";
     }
 });

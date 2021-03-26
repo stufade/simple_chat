@@ -19,12 +19,12 @@ io.on('connection', (socket) => {
   console.log(usersCodes);
   console.log("\n")
 
-  socket.on('chat message', (msg, id) => {
-    socket.emit('chat message', msg, usersCodes[id].color, 1);
-    socket.broadcast.emit('chat message', msg, usersCodes[id].color, 2);
+  socket.on('chat message', (msg) => {
+    socket.emit('chat message', msg, usersCodes[socket.id].color, 1);
+    socket.broadcast.emit('chat message', msg, usersCodes[socket.id].color, 2);
   });
 
-  socket.on('newUser', id => {
+  socket.on('newUser', () => {
     console.log(`User ${usersCodes[socket.id].userId} sent a message\n`);
   });
 
@@ -47,9 +47,19 @@ class User {
   color;
 
   constructor(userId) {
-    let randomColor = Math.floor(Math.random()*16777215).toString(16);
+    function randomColor() {
+      let c = '';
+  
+      while (c.length < 6) {
+          c += (Math.random()).toString(16).substr(-6).substr(-1);
+      }
+  
+      return '#' + c;
+    }
+
+    let clr = randomColor();
     
     this.userId = userId;
-    this.color = "#" + randomColor;
+    this.color = clr;
   }
 }
