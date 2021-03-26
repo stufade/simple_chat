@@ -60,5 +60,13 @@ body, input {
 .message2 {
   align-self: flex-start; }
 
+.private {
+  color: #8c18fa; }
+
+.message0 {
+  align-self: center;
+  font-size: 15px;
+  color: #727f88; }
+
 .window [class^=message]:last-child {
   border-top: 20px solid white; }
