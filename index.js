@@ -4,8 +4,8 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 
-let usersCodes = {}; // socket.id -> {color, userId}
-let usersIds = {};   // userId -> socket.id
+let usersCodes = {}; // socket.id -> {color, userId, userName}
+let usersNames = {}; // userName -> socket.id
 let userCode = 1;
 
 app.use(express.static("public"));
@@ -15,32 +15,45 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log(`User ${userCode} connected\n`);
-  usersCodes[socket.id] = new User(userCode);
-  usersIds[userCode] = socket.id;
-  io.emit("chat message", `User ${userCode} connected`, usersCodes[socket.id].color, 0);
-  console.log(usersCodes);
-  console.log("\n");
-  userCode++;
+
+  socket.on("newUser", userName => {
+    console.log(`User ${userCode} connected\n`);
+    usersCodes[socket.id] = new User(userCode, userName);
+    console.log(usersCodes);
+    console.log("\n");
+    userCode++;
+
+    usersNames[userName] = socket.id;
+    io.emit("chat message", `${userName} connected`, usersCodes[socket.id].color, 0);
+  });
 
   socket.on('private message', (recipient, msg) => {
-    io.to(usersIds[recipient]).emit('chat message', msg, usersCodes[socket.id].color, 2, "private");
+    if (!usersCodes[socket.id]) return;
+
+    io.to(usersNames[recipient]).emit('chat message', msg, usersCodes[socket.id].color, 2, "private");
     socket.emit('chat message', msg, usersCodes[socket.id].color, 1, "private");
   });
 
   socket.on('chat message', (msg) => {
+    if (!usersCodes[socket.id]) return;
+    
     socket.emit('chat message', msg, usersCodes[socket.id].color, 1);
     socket.broadcast.emit('chat message', msg, usersCodes[socket.id].color, 2);
   });
 
   socket.on('newMessage', () => {
+    if (!usersCodes[socket.id]) return;
+
     console.log(`User ${usersCodes[socket.id].userId} sent a message\n`);
   });
 
   socket.on("disconnect", () => {
-    console.log(`User ${usersCodes[socket.id].userId} disconnected\n`);
-    io.emit("chat message", `User ${usersCodes[socket.id].userId} disconnected`, usersCodes[socket.id].color, 0);
+    if (!usersCodes[socket.id]) return;
 
+    console.log(`${usersCodes[socket.id].userName} disconnected\n`);
+    io.emit("chat message", `${usersCodes[socket.id].userName} disconnected`, usersCodes[socket.id].color, 0);
+
+    delete usersNames[usersCodes[socket.id].userName];
     delete usersCodes[socket.id];
 
     console.log(usersCodes);
@@ -55,8 +68,9 @@ http.listen(port, () => {
 class User {
   userId;
   color;
+  userName;
 
-  constructor(userId) {
+  constructor(userId, name) {
     function randomColor() {
       let c = '';
   
@@ -71,5 +85,6 @@ class User {
     
     this.userId = userId;
     this.color = clr;
+    this.userName = name;
   }
 }

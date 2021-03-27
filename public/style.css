@@ -7,6 +7,27 @@ body, input {
   padding: 0;
   box-sizing: border-box; }
 
+.input-name {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: #f1f1f1;
+  text-align: center; }
+  .input-name input {
+    border: none; }
+    .input-name input:focus {
+      outline: none; }
+  .input-name .name-btn {
+    cursor: pointer; }
+  .input-name .input-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    .input-name .input-wrapper .text {
+      margin-bottom: 50px; }
+
 .main {
   width: 500px;
   height: 600px;

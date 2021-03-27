@@ -8,17 +8,23 @@
       <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="input-name">
+        <div class="input-wrapper">
+            <div class="text">Insert Your Name</div>
+            <input type="text" class="name-input" placeholder="Your name...">
+            <input type="button" value="Save" class="name-btn">
+        </div>
+    </div>
+
     <div class="main">
         <div class="wrapper">
-            <div class="window">
-            </div>
+            <div class="window"></div>
         </div>
         <input type="text" class="input"> 
     </div>
 
     <script src="socket.io/socket.io.js"></script>
-
-    <script src="logic.js">
-    </script>
+    <script src="logic.js"></script>
+    <script src="nameInput.js"></script>
 </body>
 </html>
