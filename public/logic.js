@@ -10,7 +10,11 @@ input.addEventListener("keydown", function(e) {
 
         let words = text.split(" ");
         if (words[0] == "/w" && words[1]) {
-            socket.emit("private message", words[1], words.slice(2).join(" "));
+            let firstIndex = text.indexOf(`"`) + 1,
+                lastIndex  = text.indexOf(`"`, firstIndex + 1);
+            let recipientName = text.slice(firstIndex, lastIndex);
+            console.log(recipientName);
+            socket.emit("private message", recipientName, text.slice(lastIndex + 2, -1));
             input.value = "";
             return;
         }
