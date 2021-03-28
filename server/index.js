@@ -4,11 +4,13 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 const parentDirectory = __dirname.split("\\").slice(0, -1).join("\\");
-console.log(parentDirectory);
+
+const User = require("./User.js");
 
 let usersCodes = {}; // socket.id -> {color, userId, userName}
 let usersNames = {}; // userName -> socket.id
 let userCode = 1;
+
 
 app.use(express.static(parentDirectory + "/public"));
 
@@ -66,27 +68,3 @@ io.on('connection', (socket) => {
 http.listen(port, () => {
   console.log(`Socket.IO server running at http://localhost:${port}/`);
 });
-
-class User {
-  userId;
-  color;
-  userName;
-
-  constructor(userId, name) {
-    function randomColor() {
-      let c = '';
-  
-      while (c.length < 6) {
-          c += (Math.random()).toString(16).substr(-6).substr(-1);
-      }
-  
-      return '#' + c;
-    }
-
-    let clr = randomColor();
-    
-    this.userId = userId;
-    this.color = clr;
-    this.userName = name;
-  }
-}
