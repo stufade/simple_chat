@@ -1,4 +1,5 @@
 const express = require('express');
+const { copyFileSync } = require('fs');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -7,9 +8,8 @@ const parentDirectory = __dirname.split("\\").slice(0, -1).join("\\");
 
 const User = require("./User.js");
 
-let usersCodes = {}; // socket.id -> {color, userId, userName}
+let usersCodes = {}; // socket.id -> {color, sameUserNameId, userName}
 let usersNames = {}; // userName -> socket.id
-let userCode = 1;
 
 
 app.use(express.static(parentDirectory + "/public"));
@@ -21,11 +21,13 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
 
   socket.on("newUser", userName => {
-    console.log(`User ${userCode} connected\n`);
-    usersCodes[socket.id] = new User(userCode, userName);
+    if (usersNames.hasOwnProperty(userName)) {
+      userName += "#" + usersCodes[usersNames[userName]].sameUserNameId++;
+    }
+    console.log(`${userName} connected\n`);
+    usersCodes[socket.id] = new User(userName);
     console.log(usersCodes);
     console.log("\n");
-    userCode++;
 
     usersNames[userName] = socket.id;
     io.emit("chat message", `${userName} connected`, usersCodes[socket.id].color, 0);

@@ -1,12 +1,11 @@
 module.exports = class User {
-    userId;
     color;
     userName;
+    sameUserNameId = 1;
   
-    constructor(userId, name) {
+    constructor(name) {
       let clr = randomColor();
       
-      this.userId = userId;
       this.color = clr;
       this.userName = name;
 
